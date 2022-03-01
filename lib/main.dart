@@ -1,23 +1,25 @@
+import 'package:chat_app_demo/api/firebase_api.dart';
+import 'package:chat_app_demo/pages/chat_page.dart';
+import 'package:chat_app_demo/pages/chats_page.dart';
+import 'package:chat_app_demo/users.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:chat_app_demo/pages/signin.dart';
-import 'package:chat_app_demo/pages/register.dart';
-import 'package:chat_app_demo/pages/chat.dart';
-import 'package:chat_app_demo/pages/chat_room.dart';
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await FirebaseApi.addRandomUsers(Users.initUsers);
 
+  runApp(MyApp());
+}
 
-void main() => runApp(MaterialApp(
-  home: Splash(),
-));
+class MyApp extends StatelessWidget {
+  static final String title = 'Firebase Chat';
 
-
-class Splash extends StatelessWidget{
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue,
-      body: SafeArea(
-        child: Text("Some random text")
-      ),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+    debugShowCheckedModeBanner: false,
+    title: title,
+    theme: ThemeData(primarySwatch: Colors.deepOrange),
+    home: ChatsPage(),
+  );
 }
